@@ -20,19 +20,35 @@ const mockVisitors = [
   },
 ];
 
-const useChatStore = create((set) => ({
+const useChatStore = create((set, get) => ({
   visitors: mockVisitors,
   selectedVisitor: null,
   messages: [],
 
-  setVisitors: (visitors) => set({ visitors }),
+  setVisitors: (visitors) => {
+    // Recalculate unreadCount for each visitor based on current messages
+    const messages = get().messages;
+    const updatedVisitors = visitors.map(visitor => {
+      const unreadCount = messages.filter(m => m.visitorId === visitor.id && !m.isRead).length;
+      return { ...visitor, unreadCount };
+    });
+    set({ visitors: updatedVisitors });
+  },
   addVisitor: (visitor) =>
     set((state) => ({
       visitors: [...state.visitors, visitor],
     })),    
   setSelectedVisitor: (visitor) => set({ selectedVisitor: visitor }),
 
-  setMessages: (messages) => set({ messages }),
+  setMessages: (messages) => {
+    // Recalculate unreadCount for each visitor
+    const visitors = get().visitors;
+    const updatedVisitors = visitors.map(visitor => {
+      const unreadCount = messages.filter(m => m.visitorId === visitor.id && !m.isRead).length;
+      return { ...visitor, unreadCount };
+    });
+    set({ messages, visitors: updatedVisitors });
+  },
   addMessage: (msg) =>
     set((state) => ({
       messages: [...state.messages, msg],

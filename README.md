@@ -1,75 +1,84 @@
-# C-Zentrix Live Chat App
+# C-Zentrix Chat_App
 
-A real-time chat application built with React and Vite. This project demonstrates a simple live chat interface with visitor tracking, chat history, and mock server integration for local development.
+A monorepo containing both the **frontend** (React + Vite) and **backend** (Node.js + Express + Socket.io) for a real-time chat application.
 
-## Features
-
-- Real-time chat between users
-- Visitor list and individual visitor profiles
-- Chat history popup
-- Responsive and modern UI
-- Mock server for local development and testing
-
-## Getting Started
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-### Running the App
-
-To start the development server with hot module replacement:
-
-```bash
-npm run dev
-```
-
-The app will be available at [http://localhost:5173](http://localhost:5173) by default.
-
-### Mock Server
-
-A mock server is included for simulating chat messages and visitors. It starts automatically with the app. You can modify `src/mockServer.js` to customize mock data.
+---
 
 ## Project Structure
 
 ```
-my-project/
-├── public/                # Static assets
-├── src/
-│   ├── components/        # React components (ChatWindow, ChatMessage, VisitorList, etc.)
-│   ├── store/             # State management (chatStore.js)
-│   ├── mockServer.js      # Mock server for local development
-│   ├── socket.js          # Socket connection logic
-│   ├── App.jsx            # Main app component
-│   └── main.jsx           # Entry point
-├── package.json           # Project metadata and scripts
-├── vite.config.js         # Vite configuration
-└── README.md              # Project documentation
+Chat_App/
+  frontend/   # React app (Vite)
+  backend/    # Node.js/Express/Socket.io server
+  README.md   # This file
+  .gitignore
 ```
+
+---
+
+## Getting Started
+
+### 1. Clone the repository
+
+```sh
+git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+cd YOUR-REPO
+```
+
+### 2. Install dependencies
+
+#### Backend
+```sh
+cd backend
+npm install
+```
+
+#### Frontend
+```sh
+cd ../frontend
+npm install
+```
+
+---
+
+## Running the App
+
+### Start the backend
+
+```sh
+cd backend
+npm run dev
+```
+The backend runs on [http://localhost:3001](http://localhost:3001)
+
+### Start the frontend
+
+```sh
+cd frontend
+npm run dev
+```
+The frontend runs on [http://localhost:5173](http://localhost:5173)
+
+---
+
+## Features
+
+- Real-time chat between users and visitors
+- Visitor list and individual visitor profiles
+- Chat history with timestamps
+- Unread message indicators
+- Random mock visitors and messages for demo/testing
+- Responsive and modern UI
+
+---
 
 ## Scripts
 
-- `npm run dev` - Start the development server
-- `npm run build` - Build the app for production
-- `npm run preview` - Preview the production build
+- `npm run dev` - Start the development server (frontend or backend)
+- `npm run build` - Build the frontend for production
+- `npm run preview` - Preview the production frontend build
 
-## Development
-
-- Edit components in `src/components/` to customize the chat UI.
-- Update `src/mockServer.js` to change mock data or simulate different scenarios.
-- Use `src/store/chatStore.js` for state management logic.
-
-## Contributing
-
-Contributions are welcome! Please open issues or pull requests for improvements or bug fixes.
+---
 
 ## License
 

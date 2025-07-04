@@ -8,14 +8,9 @@ export default function ChatWindow() {
   const [input, setInput] = useState("");
 
   useEffect(() => {
-    if (!selectedVisitor) return;
-    fetch(`/api/messages/${selectedVisitor.id}`)
-      .then((res) => res.json())
-      .then(setMessages);
-  }, [selectedVisitor]);
+    socket.on("messages_init", setMessages);
 
-  useEffect(() => {
-    socket.on("new_message", (msg) => {
+    socket.on("message", (msg) => {
       if (msg.visitorId === selectedVisitor?.id) {
         msg.isRead = true;
         addMessage(msg);
@@ -27,8 +22,18 @@ export default function ChatWindow() {
         }
       }
     });
-    return () => socket.off("new_message");
-  }, [selectedVisitor, addMessage, resetUnread]);
+    return () => {
+      socket.off("messages_init", setMessages);
+      socket.off("message");
+    };
+  }, [selectedVisitor, addMessage, resetUnread, setMessages]);
+
+  // Mark read when a visitor is selected
+  useEffect(() => {
+    if (selectedVisitor) {
+      socket.emit('read_messages', selectedVisitor.id);
+    }
+  }, [selectedVisitor]);
 
   const handleSend = () => {
     const msg = {
@@ -40,7 +45,6 @@ export default function ChatWindow() {
       isRead: true,
     };
     socket.emit("send_message", msg);
-    addMessage(msg);
     resetUnread(selectedVisitor.id);
     setInput("");
   };

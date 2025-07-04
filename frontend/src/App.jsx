@@ -6,19 +6,19 @@ import { useEffect } from "react";
 import socket from "./socket";
 
 export default function App() {
-  const { setVisitors, setSelectedVisitor, resetUnread } = useChatStore();
+  const { setVisitors, setSelectedVisitor, resetUnread, addVisitor } = useChatStore();
 
   useEffect(() => {
-    fetch("/api/visitors")
-      .then((res) => res.json())
-      .then(setVisitors);
-
-    socket.on("new_visitor", (v) => {
-      setVisitors((prev) => [...prev, v]);
-    });
-
-    return () => socket.off("new_visitor");
-  }, []);
+    // Full visitor list updates
+    socket.on("visitors_update", setVisitors);
+    // When new visitor added
+    socket.on("visitor_added", addVisitor);
+    
+    return () => {
+      socket.off("visitors_update", setVisitors);
+      socket.off("visitor_added", addVisitor);
+    };
+  }, [setVisitors, addVisitor]);
 
   const handleSelect = (v) => {
     setSelectedVisitor(v);
