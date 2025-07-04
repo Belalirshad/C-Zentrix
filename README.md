@@ -21,8 +21,7 @@ Chat_App/
 ### 1. Clone the repository
 
 ```sh
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
-cd YOUR-REPO
+git clone https://github.com/Belalirshad/C-Zentrix.git
 ```
 
 ### 2. Install dependencies
